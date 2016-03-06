@@ -1,0 +1,13 @@
+{
+ "name": "codetestapi",
+ "version": "0.0.1",
+ "description": "Code test api",
+ "author": "dierat",
+ "repository": {
+  "type": "git",
+  "url": "https://github.com/dierat/codetestapi"
+ },
+ "dependencies": {
+   "acorn": "^3.0.4"
+ }
+}
