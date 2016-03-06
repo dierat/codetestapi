@@ -63,7 +63,6 @@ spacebars@1.0.8-beta.12
 spacebars-compiler@1.0.8-beta.12
 standard-minifier-css@1.0.3-beta.12
 standard-minifier-js@1.0.3-beta.12
-standard-minifiers@1.0.3-beta.12
 templating@1.1.6-beta.12
 templating-tools@1.0.1-beta.12
 tracker@1.0.10-beta.12
