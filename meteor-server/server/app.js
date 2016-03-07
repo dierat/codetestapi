@@ -1,3 +1,5 @@
+import esprima from 'esprima';
+
 /*
 
 'code' will be a string of raw JavaScript
@@ -12,6 +14,7 @@ and false if it does not
 */
 const analyzeCode = function(code, functionality){
   // parse the student-written code to more easily analyze what it contains
+  const parsed = esprima.parse(code);
 
   // define a variable to track if the shouldHaves are all present,
     // by default set to false
