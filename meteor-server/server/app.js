@@ -17,17 +17,32 @@ const analyzeCode = function(code, functionality){
   const parsed = esprima.parse(code);
 
   // define an object literal to hold the types of code in the 'code' input
+  const codeTypes = {};
 
   // for each object literal's 'type' value in parsed.body,
+  parsed.body.forEach((codeNode)=>{
     // add it to the code types object literal
+    codeTypes[ codeNode.type ] = true;
+  });
 
   // for each of the shouldHave's,
+  functionality.shouldHave.forEach((type)=>{
     // if it isn't in the code types object literal,
-    // return false
+    if ( !(type in codeTypes) ){
+      // return false
+      return false;
+    }
+  });
 
   // for each of the shouldNotHave's,
+  functionality.shouldNotHave.forEach((type)=>{
     // if it's in the code types object literal,
-    // return false
+    if (type in codeTypes){
+      // return false
+      return false;
+    }
+  });
 
   // if the function has not yet returned false, return true
+  return true;
 };
