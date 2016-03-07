@@ -21,14 +21,18 @@ const analyzeCode = function(code, functionality){
   parsed.body.forEach((codeNode)=> codeTypes[ codeNode.type ] = true);
 
   // check if each shouldHave is in input code, otherwise return false
-  functionality.shouldHave.forEach((type)=>{
-    if ( !(type in codeTypes) ) return false;
-  });
+  if (functionality.shouldHave){
+    functionality.shouldHave.forEach((type)=>{
+      if ( !(type in codeTypes) ) return false;
+    });
+  }
 
   // check if each shouldNotHave isn't in input code, otherwise return false
-  functionality.shouldNotHave.forEach((type)=>{
-    if (type in codeTypes) return false;
-  });
+  if (functionality.shouldNotHave){
+    functionality.shouldNotHave.forEach((type)=>{
+      if (type in codeTypes) return false;
+    });
+  }
 
   // if the function has not yet returned false, return true
   return true;
