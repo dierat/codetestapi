@@ -8,6 +8,7 @@
   "url": "https://github.com/dierat/codetestapi"
  },
  "dependencies": {
-   "esprima": "^2.7.2"
+   "esprima": "^2.7.2",
+   "speckjs": "^1.1.1"
  }
 }
