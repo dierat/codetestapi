@@ -40,3 +40,5 @@ const analyzeCode = function(code, functionality){
   // if the code input passed the checks, return true
   return true;
 };
+
+export {analyzeCode};
