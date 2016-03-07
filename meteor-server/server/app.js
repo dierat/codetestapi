@@ -16,14 +16,13 @@ const analyzeCode = function(code, functionality){
   // parse the student-written code to more easily analyze what it contains
   const parsed = esprima.parse(code);
 
-  // define a variable to track if the shouldHaves are all present,
-    // by default set to false
-  // define a variable to track if none of the shouldNotHaves are present
-    // by default set to false
+  // for each of the shouldHave's,
+    // if it does not exist in parsed.body,
+    // return false
 
   // for each of the object literals in parsed.body,
-    // check if the type corresponds the values in functionality,
-    // updating the tracking variables (defined above) if they fail
+    // if the type corresponds the values in shouldNotHave,
+    // return false
 
-  // return false if either of the tracking variables are false, otherwise true
+  // if the function has not yet returned false, return true
 };
