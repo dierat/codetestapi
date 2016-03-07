@@ -22,16 +22,18 @@ const analyzeCode = function(code, functionality){
 
   // check if each shouldHave is in input code, otherwise return false
   if (functionality.shouldHave){
-    functionality.shouldHave.forEach((type)=>{
+    for (let i = 0; i < functionality.shouldHave.length; i++){
+      const type = functionality.shouldHave[i];
       if ( !(type in codeTypes) ) return false;
-    });
+    }
   }
 
   // check if each shouldNotHave isn't in input code, otherwise return false
   if (functionality.shouldNotHave){
-    functionality.shouldNotHave.forEach((type)=>{
+    for (let j = 0; j < functionality.shouldNotHave.length; j++){
+      const type = functionality.shouldNotHave[j];
       if (type in codeTypes) return false;
-    });
+    }
   }
 
   // if the function has not yet returned false, return true
