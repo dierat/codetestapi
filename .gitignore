@@ -1,2 +1,3 @@
 notes.txt
 meteor-server/node_modules
+meteor-server/server/test.js
