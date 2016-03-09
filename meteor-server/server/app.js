@@ -9,19 +9,54 @@ import esprima from 'esprima';
 
     shouldNotHave: [],
 
-    structure: [{
-      ForStatement: [{
-        IfStatement: [{
-          WhileStatement: null
-        }]
-      }]
-    }]
+    structure: {
+      type: 'ForStatement',
+      child:
+      {
+        type: 'IfStatement',
+        child:
+        {
+          type: 'WhileStatement',
+          child: null
+        }
+      }
+    }
   }
 
 'analyzeCode' will return true if the code passed in matches all the requirements
 and false if it does not
 
 */
+
+// declare a recursive function that accepts the current structure node and current parsed code node
+const searchStructure = function(parsedNode, compareNode){
+  // loop through the parsedNode's body array
+  for (let l = 0; l < parsedNode.length; l++){
+    // if the type matches the type of the current compareNode
+    if (parsedNode[l].type === compareNode.type){
+      // if that compareNode has no child,
+      if (!compareNode.child){
+        // return true
+        return true;
+      } else {
+        let body = parsedNode[l].body || parsedNode[l].consequent;
+        if (body){
+          if (body.type === 'BlockStatement'){
+            body = body.body;
+          } else {
+            body = [body];
+          }
+          const foundAll = searchStructure(body, compareNode.child);
+          if (foundAll) return true;
+        } else {console.log("can't continue with parsedNode!");}
+      }
+    }
+  }
+  return false;
+};
+
+
+
 const analyzeCode = function(code, functionality){
   // parse the student-written code to more easily analyze what it contains
   const parsed = esprima.parse(code);
@@ -47,17 +82,8 @@ const analyzeCode = function(code, functionality){
   }
 
   if (functionality.structure){
-    // for each structural tree
-    for (let k = 0; k < functionality.shouldNotHave.length; k++){
-      const structure = functionality.structure[k];
-
-      // declare a variable to track if the full tree structure has been found
-      // look in parsed.body for an object with a type corresponding with the top of the structure
-      // if you find one that matches, check that object's body and loop through looking for the next type
-      // continue until you reach a value in the structure that is equal to null or until you can't find a type in the structure
-      // if you reach a null value, set the found variable to true and break out of the for loop
-      // if you get to the end of the trees in parsed.body without finding the full structure, return false from the top function
-    }
+    const matches = searchStructure(parsed.body, functionality.structure);
+    if (!matches) return false;
   }
 
   // if the code input passed the checks, return true
@@ -65,12 +91,3 @@ const analyzeCode = function(code, functionality){
 };
 
 export {analyzeCode};
-
-
-const forLoopWithIf = `
-  for (let i = 0; i < 5; i++){
-    if (i % 2 === 0) console.log(i);
-  }
-`;
-
-console.log(esprima.parse(forLoopWithIf).body[0].body);
