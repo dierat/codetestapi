@@ -28,30 +28,35 @@ and false if it does not
 
 */
 
-// declare a recursive function that accepts the current structure node and current parsed code node
+
 const searchStructure = function(parsedNode, compareNode){
-  // loop through the parsedNode's body array
+  // loop through the current student code node
   for (let l = 0; l < parsedNode.length; l++){
-    // if the type matches the type of the current compareNode
+    // if the two current nodes are of the same type
+
     if (parsedNode[l].type === compareNode.type){
-      // if that compareNode has no child,
+      // if this is the last node in the comparison structure, the code passes
       if (!compareNode.child){
-        // return true
         return true;
+
       } else {
+        // find the next child node in the code and call this function with it
         let body = parsedNode[l].body || parsedNode[l].consequent;
         if (body){
           if (body.type === 'BlockStatement'){
             body = body.body;
           } else {
+            // this function expects parsedNode to be an array
             body = [body];
           }
           const foundAll = searchStructure(body, compareNode.child);
           if (foundAll) return true;
-        } else {console.log("can't continue with parsedNode!");}
+        }
       }
     }
   }
+
+  // if we finished the loop without finding the structure, the code fails
   return false;
 };
 
