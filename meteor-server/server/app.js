@@ -52,36 +52,41 @@ const checkTypes = function(desiredTypes, haveTypes, desiredNot){
 // 'parsedNode' is the current node of the parsed input code
 // 'compareNode' is the current node of the desired code structure
 const searchStructure = function(parsedNode, compareNode){
+  console.log("parsedNode = ", parsedNode);
+  console.log("compareNode = ", compareNode);
   // loop through the current student code node
   for (let l = 0; l < parsedNode.length; l++){
 
+    let nextParsedNode = parsedNode[l];
+    let nextCompareNode = compareNode;
+
     // if the two current nodes are of the same type
-    if (parsedNode[l].type === compareNode.type){
+    if (nextParsedNode.type === compareNode.type){
 
       // if this is the last node in the comparison structure, the code passes
       if (!compareNode.child){
         return true;
 
       } else {
-        // find the next child node in the code and call this function with it
-        let body = parsedNode[l].body || parsedNode[l].consequent;
-        if (body){
-          if (body.type === 'BlockStatement'){
-            body = body.body;
-          } else {
-            // this function expects parsedNode to be an array
-            body = [body];
-          }
-
-          const foundAll = searchStructure(body, compareNode.child);
-          if (foundAll) return true;
-        }
+        nextCompareNode = nextCompareNode.child;
       }
+    } else {
+      if (!compareNode.child) return false;
+    }
+
+    // find the next child node in the code and call this function with it
+    nextParsedNode = nextParsedNode.body || nextParsedNode.consequent;
+    if (nextParsedNode){
+      if (nextParsedNode.type === 'BlockStatement'){
+        nextParsedNode = nextParsedNode.body;
+      } else {
+        // this function expects parsedNode to be an array
+        nextParsedNode = [nextParsedNode];
+      }
+
+      return searchStructure(nextParsedNode, nextCompareNode);
     }
   }
-
-  // if we finished the loop without finding the structure, the code fails
-  return false;
 };
 
 
