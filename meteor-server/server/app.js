@@ -2,36 +2,6 @@ import esprima from 'esprima';
 
 
 
-/*
-'code' will be a string of raw JavaScript.
-'functionality' will be an object literal in the following format:
-  {
-    shouldHave: [],
-
-    shouldNotHave: [],
-
-    structure: {
-      type: 'ForStatement',
-      child:
-      {
-        type: 'IfStatement',
-        child:
-        {
-          type: 'WhileStatement',
-          child: null
-        }
-      }
-    }
-  }
-
-'analyzeCode' will return true if the code passed in matches all the requirements
-and false if it does not
-
-Please see the README for more information.
-*/
-
-
-
 // This is a helper function for checking the shouldHave's and shouldNotHave's.
 // 'desiredTypes' will be an array of strings.
 // 'parsedCode' will be the parsed input code from Esprima.
@@ -87,6 +57,38 @@ const searchStructure = function(parsedNode, compareNode){
 
 
 
+/*
+This is the entry function which is called for testing.
+
+
+'code' will be a string of raw JavaScript.
+
+'functionality' will be an object literal in the following format:
+  {
+    shouldHave: [],
+
+    shouldNotHave: [],
+
+    structure: {
+      type: 'ForStatement',
+      child:
+      {
+        type: 'IfStatement',
+        child:
+        {
+          type: 'WhileStatement',
+          child: null
+        }
+      }
+    }
+  }
+
+
+'analyzeCode' will return true if the code passed in matches all the requirements
+and false if it does not.
+
+Please see the README for more information.
+*/
 const analyzeCode = function(code, functionality){
   // parse the student-written code to more easily analyze what it contains
   const parsed = esprima.parse(code);
