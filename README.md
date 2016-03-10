@@ -1,6 +1,6 @@
 # Code Test API
 
-This is an API for checking if a string of JavaScript code contains various functionality. This is intended primarily for the purpose of analyzing a learning programmer's code to determine if they're using the intended tools at their disposal for the problem given to them.
+This is an API for checking if a string of JavaScript code contains specific or structure functionality. This is intended primarily for the purpose of analyzing a learning programmer's code to determine if they're using the intended tools at their disposal for the problem given to them.
 
 # How to use it
 
@@ -16,7 +16,7 @@ The function 'analyzeCode' accepts two parameters - a string of JavaScript code 
 
 The arrays for the `shouldHave` and `shouldNotHave` keys should contain strings that describe what the program should and should not have (respectfully). Please note that each key is optional; you only need to pass in the functionality checks that you want.
 
-This is the list of strings the program will look to understand what you're checking for in the shouldHave and shouldNotHave arrays:
+This is the list of strings the program will look for to understand what you're checking for in the shouldHave and shouldNotHave arrays:
 
 - 'VariableDeclaration'
 - 'IfStatement'
