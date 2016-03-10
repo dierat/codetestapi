@@ -36,10 +36,10 @@ Please see the README for more information.
 // 'haveTypes' will be an object literal with keys for types of code found in input code
 // 'desiredNot' is an optional boolean indicating that the 'desiredTypes' are actually
 // undesired types and the code fails if these are present in the 'haveTypes'
-const checkTypes = function(desiredTypes, haveTypes, desiredNot){
+const checkTypes = function(parsedCode, desiredTypes, desiredNot){
   for (let i = 0; i < desiredTypes.length; i++){
     const type = desiredTypes[i];
-    const found = type in haveTypes;
+    const found = searchStructure(parsedCode, {type: type, child: null});
     if ((!found && !desiredNot) || (found && desiredNot)) return false;
   }
 
@@ -52,9 +52,6 @@ const checkTypes = function(desiredTypes, haveTypes, desiredNot){
 // 'parsedNode' is the current node of the parsed input code
 // 'compareNode' is the current node of the desired code structure
 const searchStructure = function(parsedNode, compareNode){
-  console.log("parsedNode = ", parsedNode);
-  console.log("compareNode = ", compareNode);
-  // loop through the current student code node
   for (let l = 0; l < parsedNode.length; l++){
 
     let nextParsedNode = parsedNode[l];
@@ -70,8 +67,6 @@ const searchStructure = function(parsedNode, compareNode){
       } else {
         nextCompareNode = nextCompareNode.child;
       }
-    } else {
-      if (!compareNode.child) return false;
     }
 
     // find the next child node in the code and call this function with it
@@ -101,12 +96,12 @@ const analyzeCode = function(code, functionality){
 
   // check if each shouldHave is in input code; if not, return false
   if (functionality.shouldHave){
-    if ( !checkTypes(functionality.shouldHave, codeTypes, false) ) return false;
+    if ( !checkTypes(parsed.body, functionality.shouldHave, false) ) return false;
   }
 
   // check if each shouldNotHave isn't in input code; if not, return false
   if (functionality.shouldNotHave){
-    if ( !checkTypes(functionality.shouldNotHave, codeTypes, true) ) return false;
+    if ( !checkTypes(parsed.body, functionality.shouldNotHave, true) ) return false;
   }
 
   // check if desired structure exists in input code; if not, return false
