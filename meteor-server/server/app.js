@@ -3,7 +3,7 @@ import esprima from 'esprima';
 
 
 /*
-'code' will be a string of raw JavaScript
+'code' will be a string of raw JavaScript.
 'functionality' will be an object literal in the following format:
   {
     shouldHave: [],
@@ -32,14 +32,14 @@ Please see the README for more information.
 
 
 
-// 'desiredTypes' will be an array of strings
-// 'haveTypes' will be an object literal with keys for types of code found in input code
+// This is a helper function for checking the shouldHave's and shouldNotHave's.
+// 'desiredTypes' will be an array of strings.
+// 'parsedCode' will be the parsed input code from Esprima.
 // 'desiredNot' is an optional boolean indicating that the 'desiredTypes' are actually
-// undesired types and the code fails if these are present in the 'haveTypes'
+// undesired types and the code fails if these are present in the 'parsedCode'.
 const checkTypes = function(parsedCode, desiredTypes, desiredNot){
   for (let i = 0; i < desiredTypes.length; i++){
-    const type = desiredTypes[i];
-    const found = searchStructure(parsedCode, {type: type, child: null});
+    const found = searchStructure(parsedCode, {type: desiredTypes[i], child: null});
     if ((!found && !desiredNot) || (found && desiredNot)) return false;
   }
 
@@ -48,9 +48,9 @@ const checkTypes = function(parsedCode, desiredTypes, desiredNot){
 
 
 
-// helper function for searching the structure of a code tree
-// 'parsedNode' is the current node of the parsed input code
-// 'compareNode' is the current node of the desired code structure
+// This is helper function for searching the structure of a code tree.
+// 'parsedNode' is the current node of the parsed input code.
+// 'compareNode' is the current node of the desired code structure.
 const searchStructure = function(parsedNode, compareNode){
   for (let l = 0; l < parsedNode.length; l++){
 
@@ -60,16 +60,17 @@ const searchStructure = function(parsedNode, compareNode){
     // if the two current nodes are of the same type
     if (nextParsedNode.type === compareNode.type){
 
-      // if this is the last node in the comparison structure, the code passes
+      // if this is the last node in the desired structure, the code passes
       if (!compareNode.child){
         return true;
 
+      // otherwise, check the child of this node
       } else {
         nextCompareNode = nextCompareNode.child;
       }
     }
 
-    // find the next child node in the code and call this function with it
+    // find the next child node in the parsed code and call this function with it
     nextParsedNode = nextParsedNode.body || nextParsedNode.consequent;
     if (nextParsedNode){
       if (nextParsedNode.type === 'BlockStatement'){
@@ -89,10 +90,6 @@ const searchStructure = function(parsedNode, compareNode){
 const analyzeCode = function(code, functionality){
   // parse the student-written code to more easily analyze what it contains
   const parsed = esprima.parse(code);
-
-  // add each type from input code as keys to an object literal (for faster checking)
-  const codeTypes = {};
-  parsed.body.forEach((codeNode)=> codeTypes[ codeNode.type ] = true);
 
   // check if each shouldHave is in input code; if not, return false
   if (functionality.shouldHave){
