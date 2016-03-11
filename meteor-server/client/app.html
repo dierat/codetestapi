@@ -1,6 +1,7 @@
 <head>
   <meta charset="utf-8">
   <title>Code Test Api</title>
+  <link href='https://fonts.googleapis.com/css?family=Josefin+Sans:400,300,600' rel='stylesheet' type='text/css'>
 </head>
 <body>
   {{> userRole}}
@@ -10,15 +11,13 @@
 
 <template name="userRole">
     <div class="current-challenge">
-      <div class="title">
-        {{currentChallenge.title}}
-      </div>
-      <div class="description">
+      <h1>{{currentChallenge.title}}</h1>
+      <p>
         {{currentChallenge.description}}
-      </div>
+      </p>
     </div>
 
-    <textarea name="name" rows="8" cols="40" data-role="code-input"></textarea>
+    <textarea name="name" rows="20" cols="80" data-role="code-input"></textarea>
 
     {{#if passingTests}}
       <div class="success">
@@ -26,6 +25,7 @@
       </div>
       <button type="button" name="button" class="next-button">Come at me bro!</button>
     {{else}}
+      <h2>Tests your code should pass:</h2>
       <ul class="tests">
         {{#each test in allTests}}
           <li class={{test.state}}>{{test.message}}</li>

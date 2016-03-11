@@ -1,0 +1,22 @@
+body {
+  font-family: 'Josefin Sans', sans-serif;
+  text-align: center;
+}
+
+li {
+  list-style: none;
+}
+
+.failing {
+  color: red;
+}
+
+.success {
+  color: green;
+}
+
+button {
+  border: none;
+  background-color: purple;
+  color: white;
+}
