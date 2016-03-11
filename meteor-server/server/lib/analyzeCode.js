@@ -56,6 +56,18 @@ const searchStructure = function(parsedNode, compareNode){
 };
 
 
+const isValid = function (code) {
+  var isValidCode = true;
+  try {
+    esprima.parse(code);
+  }
+  catch(e) {
+    isValidCode = false;
+  }
+  return isValidCode;
+}
+
+
 
 /*
 This is the entry function which is called for testing.
@@ -91,6 +103,9 @@ Please see the README for more information.
 */
 Meteor.methods({
   analyzeCode(code, functionality){
+    // if the code is not valid JavaScript, return false
+    if ( !isValid(code) ) return false;
+
     // parse the student-written code to more easily analyze what it contains
     const parsed = esprima.parse(code);
 
