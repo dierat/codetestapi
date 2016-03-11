@@ -78,7 +78,7 @@ const testMessages = {
 Session.setDefault({currentChallengeIndex: 0});
 Session.setDefault({currentChallenge: challenges[0]});
 Session.setDefault({passingTests: false});
-Session.setDefault({'currentTests': null});
+Session.setDefault({currentTests: null});
 
 
 /************************************************************
@@ -148,6 +148,21 @@ getCurrentTests();
 
 
 Template.userRole.events({
+  'keyup [data-role="code-input"]'(){
+    const input = $('[data-role="code-input"]').val();
+    const tests = Session.get('currentTests');
+    tests.forEach( (testObj, index)=>{
+      Meteor.call('analyzeCode', input, testObj.test, (err, result)=>{
+        console.log("result = ", result);
+        if (err) console.log(err);
+        testObj.state = result ? 'passing' : 'failing';
+        tests[index] = testObj;
+        Session.set({currentTests: tests});
+      });
+    } );
+  },
+
+
   'click .next-button'(){
     let nextChallengeIndex = Session.get('currentChallengeIndex') + 1;
     // if we've run out of challenges, loop back around to the first one
