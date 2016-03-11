@@ -138,6 +138,7 @@ const getCurrentTests = function(){
     return {
       test: test,
       message: `It ${verb} ${object}`,
+      // track if this test is currently passing or failing
       state: 'failing'
     };
   } );
@@ -152,9 +153,12 @@ Template.userRole.events({
     const input = $('[data-role="code-input"]').val();
     const tests = Session.get('currentTests');
     tests.forEach( (testObj, index)=>{
+      // check the code input against the test
       Meteor.call('analyzeCode', input, testObj.test, (err, result)=>{
         console.log("result = ", result);
         if (err) console.log(err);
+
+        // update the test so it can update the DOM
         testObj.state = result ? 'passing' : 'failing';
         tests[index] = testObj;
         Session.set({currentTests: tests});
