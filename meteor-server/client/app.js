@@ -162,6 +162,12 @@ Template.userRole.events({
         testObj.state = result ? 'passing' : 'failing';
         tests[index] = testObj;
         Session.set({currentTests: tests});
+
+        // check if all the tests are passing and record the result
+        const allTestsPassing = tests.reduce( (result, test)=>{
+          return (result || test.state === 'passing') ? true : false;
+        }, false );
+        Session.set({passingTests: allTestsPassing});
       });
     } );
   },
