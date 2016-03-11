@@ -63,11 +63,18 @@ const challenges = [
 
 Session.setDefault({currentChallengeIndex: 0});
 Session.setDefault({currentChallenge: challenges[0]});
+Session.setDefault({passingTests: false});
 
 
 
 Template.userRole.helpers({
   currentChallenge(){
     return Session.get('currentChallenge');
+  },
+  passingTests(){
+    return Session.get('passingTests');
+  },
+  codeFeedback(){
+    return "Keep going, you're almost there!!";
   }
 });
