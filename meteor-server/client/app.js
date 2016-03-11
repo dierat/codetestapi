@@ -174,10 +174,14 @@ Template.userRole.events({
 
 
   'click .next-button'(){
+    // clear textarea
+    $('[data-role="code-input"]').val('');
+    Session.set({passingTests: false});
+
+    // set up the state for the next challenge
     let nextChallengeIndex = Session.get('currentChallengeIndex') + 1;
     // if we've run out of challenges, loop back around to the first one
     if (nextChallengeIndex === challenges.length) nextChallengeIndex = 0;
-    // set up the state for the next challenge
     Session.set('currentChallengeIndex', nextChallengeIndex);
     Session.set('currentChallenge', challenges[nextChallengeIndex]);
     getCurrentTests();
