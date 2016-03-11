@@ -55,3 +55,11 @@ const challenges = [
     checks: ifInFor
   }
 ];
+
+
+/************************************************************
+  Track current challenge the user is on
+************************************************************/
+
+Session.setDefault({currentChallengeIndex: 0});
+Session.setDefault({currentChallenge: challenges[0]});
