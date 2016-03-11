@@ -36,7 +36,7 @@ const challenges = [
   },
   {
     title: 'For and var',
-    description: 'Use your formidable programming powers to write both a for loop and a var statement! Please not that the variable declaration in the for loop declaration doesn\'t count (but putting a variable declaration in the body of the for loop does!).',
+    description: 'Use your formidable programming powers to write both a for loop and a var statement! Please note that the variable declaration in the for loop declaration doesn\'t count (but putting a variable declaration in the body of the for loop does!).',
     checks: forLoopWithVar
   },
   {
@@ -51,7 +51,7 @@ const challenges = [
   },
   {
     title: 'An if in a for',
-    description: 'Write a for loop with an if statement in the body! Please note that your code needs to have this strucure to pass.',
+    description: 'Write a for loop with an if statement in the body! Please note that your code needs to have this structure to pass.',
     checks: ifInFor
   }
 ];
