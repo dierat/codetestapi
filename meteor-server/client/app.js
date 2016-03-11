@@ -66,6 +66,9 @@ Session.setDefault({currentChallenge: challenges[0]});
 Session.setDefault({passingTests: false});
 
 
+/************************************************************
+  Helpers to update information displayed to the user
+************************************************************/
 
 Template.userRole.helpers({
   currentChallenge(){
@@ -76,5 +79,20 @@ Template.userRole.helpers({
   },
   codeFeedback(){
     return "Keep going, you're almost there!!";
+  }
+});
+
+
+/************************************************************
+  Events to handle user interaction
+************************************************************/
+
+Template.userRole.events({
+  'click .next-button'(){
+    let nextChallengeIndex = Session.get('currentChallengeIndex') + 1;
+    // if we've run out of challenges, loop back around to the first one
+    if (nextChallengeIndex === challenges.length) nextChallengeIndex = 0;
+    Session.set('currentChallengeIndex', nextChallengeIndex);
+    Session.set('currentChallenge', challenges[nextChallengeIndex]);
   }
 });
