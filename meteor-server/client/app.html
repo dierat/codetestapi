@@ -19,17 +19,17 @@
 
     <textarea name="name" rows="20" cols="80" data-role="code-input"></textarea>
 
+    <h2>Tests your code should pass:</h2>
+    <ul class="tests">
+      {{#each test in allTests}}
+        <li class={{test.state}}>{{test.message}}</li>
+      {{/each}}
+    </ul>
+    
     {{#if passingTests}}
       <div class="success">
         All your tests are passing! Move on to the next chalenge whenever you're ready.
       </div>
       <button type="button" name="button" class="next-button">Come at me bro!</button>
-    {{else}}
-      <h2>Tests your code should pass:</h2>
-      <ul class="tests">
-        {{#each test in allTests}}
-          <li class={{test.state}}>{{test.message}}</li>
-        {{/each}}
-      </ul>
     {{/if}}
 </template>
