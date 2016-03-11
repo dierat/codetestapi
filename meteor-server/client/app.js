@@ -155,7 +155,6 @@ Template.userRole.events({
     tests.forEach( (testObj, index)=>{
       // check the code input against the test
       Meteor.call('analyzeCode', input, testObj.test, (err, result)=>{
-        console.log("result = ", result);
         if (err) console.log(err);
 
         // update the test so it can update the DOM
