@@ -1,6 +1,7 @@
 body {
   font-family: 'Josefin Sans', sans-serif;
   text-align: center;
+  font-size: 18px;
 }
 
 li {
@@ -11,8 +12,9 @@ li {
   color: red;
 }
 
-.success {
-  color: green;
+.passing {
+  color: #1CD381;
+  font-weight: bold;
 }
 
 button {
