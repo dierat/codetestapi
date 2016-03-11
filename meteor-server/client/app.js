@@ -63,3 +63,11 @@ const challenges = [
 
 Session.setDefault({currentChallengeIndex: 0});
 Session.setDefault({currentChallenge: challenges[0]});
+
+
+
+Template.userRole.helpers({
+  currentChallenge(){
+    return Session.get('currentChallenge');
+  }
+});

@@ -9,9 +9,15 @@
 
 
 <template name="userRole">
-    <div class="">
-      Write a program that has a for loop!
+    <div class="current-challenge">
+      <div class="title">
+        {{currentChallenge.title}}
+      </div>
+      <div class="description">
+        {{currentChallenge.description}}
+      </div>
     </div>
+
     <textarea name="name" rows="8" cols="40" data-role="code-input"></textarea>
 
     <div class="code-feedback">
