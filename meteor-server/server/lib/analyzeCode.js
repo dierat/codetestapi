@@ -89,31 +89,33 @@ and false if it does not.
 
 Please see the README for more information.
 */
-const analyzeCode = function(code, functionality){
-  // parse the student-written code to more easily analyze what it contains
-  const parsed = esprima.parse(code);
+Meteor.methods({
+  analyzeCode(code, functionality){
+    // parse the student-written code to more easily analyze what it contains
+    const parsed = esprima.parse(code);
 
-  // check if each shouldHave is in input code; if not, return false
-  if (functionality.shouldHave){
-    if ( !checkTypes(parsed.body, functionality.shouldHave, false) ) return false;
+    // check if each shouldHave is in input code; if not, return false
+    if (functionality.shouldHave){
+      if ( !checkTypes(parsed.body, functionality.shouldHave, false) ) return false;
+    }
+
+    // check if each shouldNotHave isn't in input code; if not, return false
+    if (functionality.shouldNotHave){
+      if ( !checkTypes(parsed.body, functionality.shouldNotHave, true) ) return false;
+    }
+
+    // check if desired structure exists in input code; if not, return false
+    if (functionality.structure){
+      const matches = searchStructure(parsed.body, functionality.structure);
+      if (!matches) return false;
+    }
+
+    // if the code input passed all the checks, return true
+    return true;
   }
-
-  // check if each shouldNotHave isn't in input code; if not, return false
-  if (functionality.shouldNotHave){
-    if ( !checkTypes(parsed.body, functionality.shouldNotHave, true) ) return false;
-  }
-
-  // check if desired structure exists in input code; if not, return false
-  if (functionality.structure){
-    const matches = searchStructure(parsed.body, functionality.structure);
-    if (!matches) return false;
-  }
-
-  // if the code input passed all the checks, return true
-  return true;
-};
+});
 
 
 
 // export this module for other areas of the app to use
-export {analyzeCode};
+// export {analyzeCode};
