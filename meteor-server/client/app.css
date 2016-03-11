@@ -2,6 +2,12 @@ body {
   font-family: 'Josefin Sans', sans-serif;
   text-align: center;
   font-size: 18px;
+  margin: 0;
+}
+
+.content {
+  max-width: 80%;
+  margin: 0 auto;
 }
 
 li {
@@ -17,8 +23,18 @@ li {
   font-weight: bold;
 }
 
+.success {
+  margin: 40px 0 20px 0px;
+}
+
 button {
   border: none;
   background-color: purple;
   color: white;
+  padding: 15px 20px;
+  font-size: 20px;
+}
+
+button:hover {
+  background-color: #E037E0;
 }

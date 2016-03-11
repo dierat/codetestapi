@@ -10,6 +10,7 @@
 
 
 <template name="userRole">
+  <div class="content">
     <div class="current-challenge">
       <h1>{{currentChallenge.title}}</h1>
       <p>
@@ -25,11 +26,12 @@
         <li class={{test.state}}>{{test.message}}</li>
       {{/each}}
     </ul>
-    
+
     {{#if passingTests}}
       <div class="success">
         All your tests are passing! Move on to the next chalenge whenever you're ready.
       </div>
-      <button type="button" name="button" class="next-button">Come at me bro!</button>
+      <button type="button" name="button" class="next-button">Bring it on!</button>
     {{/if}}
+  </div>
 </template>
