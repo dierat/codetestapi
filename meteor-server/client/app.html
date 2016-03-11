@@ -26,10 +26,10 @@
       </div>
       <button type="button" name="button" class="next-button">Come at me bro!</button>
     {{else}}
-      <div class="code-feedback">
-        {{#each allTests}}
-          {{this}}
+      <ul class="tests">
+        {{#each test in allTests}}
+          <li class={{test.state}}>{{test.message}}</li>
         {{/each}}
-      </div>
+      </ul>
     {{/if}}
 </template>

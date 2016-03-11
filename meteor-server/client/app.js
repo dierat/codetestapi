@@ -12,7 +12,6 @@ const whileWithForAndIf = {shouldHave: ['WhileStatement', 'ForStatement', 'IfSta
 const ifInFor = {structure: {type: "ForStatement", child: {type: "IfStatement", child: null}}};
 
 
-
 const challenges = [
   {
     title: 'A simple variable declaration',
@@ -98,13 +97,7 @@ Template.userRole.helpers({
 
 
   allTests(){
-    return Session.get('currentTests').map( (test)=>{
-      const key = Object.keys(test)[0];
-      const type = test[key];
-      const verb = testMessages[key];
-      const object = testMessages[type];
-      return `It ${verb} ${object}`;
-    } );
+    return Session.get('currentTests');
   },
 
 
@@ -122,6 +115,7 @@ const getCurrentTests = function(){
   let allTests = [];
   const currentChallenge = Session.get('currentChallenge');
 
+  // loop through the input and separate it out into individual tests
   if (currentChallenge.checks.shouldHave){
     const shouldHaves = currentChallenge.checks.shouldHave.map( (requirement)=>{
       return {shouldHave: [requirement]};
@@ -134,6 +128,19 @@ const getCurrentTests = function(){
     } ) );
   }
   if (currentChallenge.checks.structure) allTests.push(currentChallenge.checks.structure);
+
+  // convert the tests into human-friendly language to display on the screen
+  allTests = allTests.map( (test)=>{
+    const key = Object.keys(test)[0];
+    const type = test[key];
+    const verb = testMessages[key];
+    const object = testMessages[type];
+    return {
+      test: test,
+      message: `It ${verb} ${object}`,
+      state: 'failing'
+    };
+  } );
 
   Session.set('currentTests', allTests);
 };
