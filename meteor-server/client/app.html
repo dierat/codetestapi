@@ -27,7 +27,9 @@
       <button type="button" name="button" class="next-button">Come at me bro!</button>
     {{else}}
       <div class="code-feedback">
-        {{codeFeedback}}
+        {{#each allTests}}
+          {{this}}
+        {{/each}}
       </div>
     {{/if}}
 </template>

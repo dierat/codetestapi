@@ -58,12 +58,28 @@ const challenges = [
 
 
 /************************************************************
-  Track current challenge the user is on
+  Translate tests to human-readable text
+************************************************************/
+
+const testMessages = {
+  'shouldHave': 'should have',
+  'shouldNotHave': 'should not have',
+  'structure': 'should have the following structure:',
+  'VariableDeclaration': 'a variable declaration',
+  'IfStatement': 'an if statement',
+  'WhileStatement': 'a while loop',
+  'ForStatement': 'a for loop'
+};
+
+
+/************************************************************
+  Track the current state of the app
 ************************************************************/
 
 Session.setDefault({currentChallengeIndex: 0});
 Session.setDefault({currentChallenge: challenges[0]});
 Session.setDefault({passingTests: false});
+Session.setDefault({'currentTests': null});
 
 
 /************************************************************
@@ -74,9 +90,24 @@ Template.userRole.helpers({
   currentChallenge(){
     return Session.get('currentChallenge');
   },
+
+
   passingTests(){
     return Session.get('passingTests');
   },
+
+
+  allTests(){
+    return Session.get('currentTests').map( (test)=>{
+      const key = Object.keys(test)[0];
+      const type = test[key];
+      const verb = testMessages[key];
+      const object = testMessages[type];
+      return `It ${verb} ${object}`;
+    } );
+  },
+
+
   codeFeedback(){
     return "Keep going, you're almost there!!";
   }
@@ -87,12 +118,36 @@ Template.userRole.helpers({
   Events to handle user interaction
 ************************************************************/
 
+const getCurrentTests = function(){
+  let allTests = [];
+  const currentChallenge = Session.get('currentChallenge');
+
+  if (currentChallenge.checks.shouldHave){
+    const shouldHaves = currentChallenge.checks.shouldHave.map( (requirement)=>{
+      return {shouldHave: [requirement]};
+    } );
+    allTests = allTests.concat( shouldHaves );
+  }
+  if (currentChallenge.checks.shouldNotHave){
+    allTests = allTests.concat( currentChallenge.checks.shouldNotHave.map( (requirement)=>{
+      return {shouldNotHave: [requirement]};
+    } ) );
+  }
+  if (currentChallenge.checks.structure) allTests.push(currentChallenge.checks.structure);
+
+  Session.set('currentTests', allTests);
+};
+getCurrentTests();
+
+
 Template.userRole.events({
   'click .next-button'(){
     let nextChallengeIndex = Session.get('currentChallengeIndex') + 1;
     // if we've run out of challenges, loop back around to the first one
     if (nextChallengeIndex === challenges.length) nextChallengeIndex = 0;
+    // set up the state for the next challenge
     Session.set('currentChallengeIndex', nextChallengeIndex);
     Session.set('currentChallenge', challenges[nextChallengeIndex]);
+    getCurrentTests();
   }
 });
