@@ -56,6 +56,9 @@ const searchStructure = function(parsedNode, compareNode){
 };
 
 
+
+// This is a helper that checks if code is valid before attempting to parse it.
+// 'code' will be a string of (possibly) JavaScript code from user input.
 const isValid = function (code) {
   var isValidCode = true;
   try {
@@ -65,7 +68,7 @@ const isValid = function (code) {
     isValidCode = false;
   }
   return isValidCode;
-}
+};
 
 
 
