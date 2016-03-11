@@ -132,8 +132,3 @@ Meteor.methods({
     return true;
   }
 });
-
-
-
-// export this module for other areas of the app to use
-// export {analyzeCode};
